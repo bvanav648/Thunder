@@ -557,9 +557,24 @@ POP_WARNING()
             {
                 ProxyType<IMessage> result;
                 uint32_t searchIdentifier(identifier >> 1);
-
+		        printf("> bvanav-dbg: IPCconnector.h Element() searchIdentifier is %d, Identifier is %d\n", searchIdentifier, identifier);
                 _lock.Lock();
+                if (identifier & 0x01) {
+                    printf("> bvanav-dbg: IPCconnector.h Element() condition (identifier & 0x01) is true\n");
+                    if(_outbound.IsValid() == true){
+                        printf("> bvanav-dbg: IPCconnector.h Element() _outbound.IsValid() == true\n");
+                    }
+                    else{
+                        printf("> bvanav-dbg: IPCconnector.h Element() _outbound.IsValid() != true\n");
+                    }
 
+                    if(_outbound->Label() == searchIdentifier){
+                        printf("> bvanav-dbg: IPCconnector.h  Element()  _outbound->Label() == searchIdentifier\n");
+                    }
+                    else{
+                        printf("> bvanav-dbg: IPCconnector.h  Element() _outbound->Label() != searchIdentifier\n");
+                        printf("> bvanav-dbg: IPCconnector.h  Element() _outbound->Label() is %d\n", _outbound->Label());
+                    }
                 if (identifier & 0x01) {
                     if ((_outbound.IsValid() == true) && (_outbound->Label() == searchIdentifier)) {
                         result = _outbound->IResponse();
